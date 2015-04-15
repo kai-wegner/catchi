@@ -1,0 +1,22 @@
+extends simple-layout
+
+block styles
+  link(rel='stylesheet', href='/css/presentation-style.css')
+
+
+block content
+  |#{presentationContent}
+  script.
+    window.addEventListener("load", function() {
+      var soziPlayer = window.sozi.player;
+      sozi.player.addListener("frameChange", function() {
+        var currentFrame = sozi.player.currentFrame.frameId;
+        window.location.hash = currentFrame;
+      });
+      if(window.location.hash.length > 0) {
+        var targetHash  = window.location.hash.substr(1);
+        var targetIndex = sozi.presentation.getFrameWithId(targetHash).index;
+        sozi.player.jumpToFrame(targetIndex);
+        sozi.player.moveToFrame(targetIndex);
+      }
+    });

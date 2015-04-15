@@ -1,0 +1,15 @@
+extends simple-layout
+
+block styles
+  link(rel='stylesheet', href='/css/controls-style.css')
+
+block content
+  p(ng-controller='speakerNoteController',
+    ng-init="loadSpeakerNotes('#{presentationId}')",
+    ng-bind-html="speakerNote",id='speakerNote')
+  p(ng-controller='slideTimeController',
+    id='slideTime',ng-init='init()') slide: {{slideTime}}
+  p(ng-controller='presentationTimeController',
+    id='presentationTime') pres.: {{presentationTime}}
+  p(ng-controller='frameIndexController',
+    id='frameIndex', ng-init='init()') {{frameIndex}}

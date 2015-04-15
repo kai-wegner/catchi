@@ -1,0 +1,96 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  div
+    form(role='form', action='/', method='post', enctype='multipart/form-data')
+      div(class='form-group',id='uploadNewPresentation')
+        span(class="btn btn-sm btn-default btn-file") Browse
+          input(type='file', name='sozifile', id='sozifile')
+        button(class="btn btn-default btn-sm",type='submit') 
+          i(class="glyphicon glyphicon-cloud-upload")&nbsp;Upload
+
+  div(style='padding-bottom:20px;')
+  
+  table(st-table="presentationView", st-safe-src="presentations"
+        class="table table-striped")
+    thead
+      tr
+        th(colspan="2")
+          input(st-search="",
+                class="form-control",placeholder="global search ...",type="text")
+      tr
+        th(st-sort="name") Name
+        //- later ... th Preview
+        th Action
+    tbody
+      tr(ng-repeat="pres in presentationView")
+        td {{pres.name}}
+        //- later ... td 
+        //- later ...   img(src='/previews/{{pres.id}}.gif')
+        td
+          button(type="button", ng-click='startPresentation(pres.id)',
+                 class="btn btn-sm btn-success")
+                 i(class="glyphicon glyphicon-play")
+          button(type="button", ng-click='editPresentation(pres.id)',
+                 class="btn btn-sm btn-default")
+                 i(class="glyphicon glyphicon-pencil")        
+          button(type="button", ng-click="deletePresentation(pres.id)", 
+                 class="btn btn-sm btn-danger")
+               i(class="glyphicon glyphicon-trash")
+        
+  div(id='editContent')
+    hr
+    h4(style='float:left;padding-right:20px;') {{presentation.name}}
+    button(class="btn btn-default btn-sm", ng-click='saveEdit()')
+      i(class="glyphicon glyphicon-floppy-disk")
+    button(class="btn btn-default btn-sm", ng-click='closeEdit()')    
+      i(class="glyphicon glyphicon-remove")    
+    div(style='clear:both')
+    tabset
+      tab(heading="Presentation")
+        div(style='padding-bottom:20px;')
+        div(ng-repeat='property in presentationMetaData.catchi.properties')
+          label(for='{{property.key}}Key')           
+          input(ng-model='property.key',name='{{property.key}}Key')
+
+          label(for='{{property.key}}Value') =
+          input(ng-model='property.value',name='{{property.key}}Value')
+          button(class="btn btn-sm btn-danger",
+                 ng-click='presentationMetaData.catchi.properties.splice($index,1)')
+            i(class="glyphicon glyphicon-trash")
+        hr
+        div
+          p 
+            b Add a new Property
+          label(for='newPropertyName') 
+          input(ng-model='newKey',name='newPropertyName')
+
+          label(for='newPropertyValue') =
+          input(ng-model='newValue',name='newPropertyValue')
+          button(class="btn btn-sm btn-success",
+                 ng-click='presentationMetaData.catchi.properties.push({"key":newKey,"value":newValue})')
+            i(class="glyphicon glyphicon-plus")
+                 
+      tab(heading="Frames")
+        accordion(close-others="true")
+            accordion-group(heading="{{f.title}}", 
+                            ng-repeat="f in presentationMetaData.frames")
+              text-angular(ng-model='f.catchi.description', class="frameDescription")
+    
+  div(ng-init="uploadHandler('#{upload}','#{uploadFileError}','#{uploadedFile}')")
+  
+  div(id='alerts')
+    alert(ng-repeat="alert in alerts",
+          type="{{alert.type}}", 
+          close="closeAlert($index)") {{alert.msg}}
+
+  div
+      script(type="text/ng-template", id="confirmDialog.html")
+        div(class="modal-header")
+          h3(class="modal-title") Please confirm ...
+        div(class="modal-body",ng-bind-html='modalMessage')
+        div(class="modal-footer")
+          button(class="btn btn-primary", ng-click="$close()") OK
+          button(class="btn btn-warning", ng-click="$dismiss()") Cancel

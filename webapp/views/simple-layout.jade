@@ -1,0 +1,39 @@
+doctype html
+html(ng-app='catchi')
+  head
+    title= title
+
+    link(rel='stylesheet', href='/bower_components/bootstrap-css-only/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap-css-only/css/bootstrap-theme.min.css')
+
+    link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
+
+    link(rel='stylesheet', href='/bower_components/textAngular/src/textAngular.css')
+    link(rel='stylesheet', href='/css/main-style.css')
+
+    block styles
+
+    script(src='/bower_components/moment/min/moment.min.js')
+
+    script(src='/bower_components/angular/angular.js')
+    script(src='/bower_components/textAngular/dist/textAngular-sanitize.min.js')
+    script(src='/bower_components/angular-animate/angular-animate.js')
+    script(src='/bower_components/angular-bootstrap/ui-bootstrap.min.js')
+    script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+    script(src='/bower_components/angular-smart-table/dist/smart-table.min.js')
+    
+    script(src='/bower_components/textAngular/dist/textAngular-rangy.min.js')
+    script(src='/bower_components/textAngular/dist/textAngular.min.js')
+
+    script(src='/js/controllers.js')
+    block js
+
+  body(ng-controller='bodyController',ng-init="loadPresentationMetaData('#{presentationId}')")
+    block content
+
+    script(src='/js/app.js')
+    script(src='/js/controllers/bodyController.js')
+    script(src='/js/controllers/speakerNoteController.js')
+    script(src='/js/controllers/presentationTimeController.js')
+    script(src='/js/controllers/slideTimeController.js')
+    script(src='/js/controllers/frameIndexController.js')

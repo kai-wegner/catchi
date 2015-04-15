@@ -1,0 +1,27 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size:5em;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#speakerNote {
+  font-size:0.5em;
+}
+
+#slideTime,#presentationTime,#frameIndex {
+  position:absolute;
+  bottom:0px;
+}
+
+#presentationTime {
+  right:50px;
+}
+
+#frameIndex {
+  position:absolute;
+  right:45%;
+}

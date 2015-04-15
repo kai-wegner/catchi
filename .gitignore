@@ -1,0 +1,5 @@
+node_modules
+webapp/data
+webapp/bower_components
+webapp/uploads
+webapp/bin/uploads
